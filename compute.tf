@@ -30,7 +30,7 @@ resource "google_compute_instance" "vault" {
 
   boot_disk {
     initialize_params {
-      image = "coreos-cloud/coreos-stable"
+      image = "fedora-coreos-cloud/fedora-coreos-stable"
     }
   }
 
@@ -51,7 +51,7 @@ resource "google_compute_instance" "master" {
 
   boot_disk {
     initialize_params {
-      image = "coreos-cloud/coreos-stable"
+      image = "fedora-coreos-cloud/fedora-coreos-stable"
     }
   }
   network_interface {
@@ -68,7 +68,7 @@ resource "google_compute_instance" "etcd1" {
 
   boot_disk {
     initialize_params {
-      image = "coreos-cloud/coreos-stable"
+      image = "fedora-coreos-cloud/fedora-coreos-stable"
     }
   }
 
@@ -86,7 +86,7 @@ resource "google_compute_instance" "etcd1" {
 
     boot_disk {
       initialize_params {
-        image = "coreos-cloud/coreos-stable"
+        image = "fedora-coreos-cloud/fedora-coreos-stable"
       }
     }
 
@@ -103,7 +103,7 @@ resource "google_compute_instance" "etcd1" {
 
       boot_disk {
         initialize_params {
-          image = "coreos-cloud/coreos-stable"
+          image = "fedora-coreos-cloud/fedora-coreos-stable"
         }
       }
 
@@ -123,7 +123,7 @@ resource "google_compute_instance_template" "cr460-worker-template" {
 
   // Create a new boot disk from an image
   disk {
-    source_image = "coreos-cloud/coreos-stable"
+    source_image = "fedora-coreos-cloud/fedora-coreos-stable"
     auto_delete = true
     boot = true
   }
