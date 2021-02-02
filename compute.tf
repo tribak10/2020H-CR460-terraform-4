@@ -117,19 +117,22 @@ resource "google_compute_instance" "etcd1" {
 resource "google_compute_instance_template" "cr460-worker-template" {
   name                 = "cr460-worker-template"
   tags                 = ["workload"]
-  machine_type         = "f1-micro"
-  region               = "us-east1"
-  can_ip_forward       = false
+  machine_type         = "n1-standard-1"
+  region               = "us-central1"
+  can_ip_forward       = true
 
   // Create a new boot disk from an image
   disk {
     source_image = "fedora-coreos-cloud/fedora-coreos-stable"
     auto_delete = true
-    boot = true
+    boot = false
   }
 
   network_interface {
     subnetwork = google_compute_subnetwork.mtl-workload.name
+    access_config {
+
+    }
   }
 
 }
@@ -141,7 +144,7 @@ resource "google_compute_instance_group_manager" "cr460-workload-gm" {
     instance_template  = google_compute_instance_template.cr460-worker-template.self_link
     name               = "primary"
   }
-  zone               = "us-east1-c"
+  zone               = "us-central1-c"
 
 }
 
@@ -151,8 +154,8 @@ resource "google_compute_autoscaler" "cr460-autoscaler" {
   target = google_compute_instance_group_manager.cr460-workload-gm.self_link
 
   autoscaling_policy {
-    max_replicas    = 5
-    min_replicas    = 2
+    max_replicas    = 10
+    min_replicas    = 4
     cooldown_period = 60
 
     cpu_utilization {
